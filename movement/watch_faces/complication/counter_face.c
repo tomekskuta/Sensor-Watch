@@ -55,7 +55,7 @@ bool counter_face_loop(movement_event_t event, movement_settings_t *settings, vo
             break;
         case EVENT_ALARM_BUTTON_UP:
             state->counter_idx++; // increment counter index
-            if (state->counter_idx>99) { //0-99
+            if (state->counter_idx>9999) { //0-99
                 state->counter_idx=0;//reset counter index
             }
             print_counter(state);
@@ -64,6 +64,7 @@ bool counter_face_loop(movement_event_t event, movement_settings_t *settings, vo
         case EVENT_ALARM_LONG_PRESS:
             state->counter_idx=0; // reset counter index
             print_counter(state);
+            beep_reset_counter();
             break;
         case EVENT_ACTIVATE:
             print_counter(state);
@@ -80,29 +81,20 @@ bool counter_face_loop(movement_event_t event, movement_settings_t *settings, vo
 
 // beep counter index times
 void beep_counter(counter_state_t *state) {
-	
-	int low_count = state->counter_idx/5;
-	int high_count = state->counter_idx - low_count * 5; 
-	
-	for (int i=0; i<low_count; i++) {
-		watch_buzzer_play_note(BUZZER_NOTE_A6, 50);
-	    watch_buzzer_play_note(BUZZER_NOTE_REST, 100);
-	}
-	
-	//sleep between high and low
-    watch_buzzer_play_note(BUZZER_NOTE_REST, 200);
-	
-	for (int i=0; i<high_count; i++) {
-		watch_buzzer_play_note(BUZZER_NOTE_B6, 50);
-	    watch_buzzer_play_note(BUZZER_NOTE_REST, 100);
-	}
+	watch_buzzer_play_note(BUZZER_NOTE_A6, 50);
 }
 
+void beep_reset_counter(void) {
+    watch_buzzer_play_note(BUZZER_NOTE_E6, 50);
+    watch_buzzer_play_note(BUZZER_NOTE_REST, 50);
+    watch_buzzer_play_note(BUZZER_NOTE_E6, 50);
+    watch_buzzer_play_note(BUZZER_NOTE_B6, 50);
+}
 
 // print counter index at the center of display.
 void print_counter(counter_state_t *state) {
     char buf[14];
-    sprintf(buf, "CO    %02d", state->counter_idx); // center of LCD display
+    sprintf(buf, "CO  %4d", state->counter_idx); // center of LCD display
     watch_display_string(buf, 0);
 }
 

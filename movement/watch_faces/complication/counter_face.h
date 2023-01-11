@@ -29,7 +29,7 @@
 
 // Counter face is designed to count the number of running laps during excercises.
 typedef struct {
-    uint8_t counter_idx;
+    uint16_t counter_idx;
 } counter_state_t;
 
 
@@ -40,6 +40,7 @@ void counter_face_resign(movement_settings_t *settings, void *context);
 
 void print_counter(counter_state_t *state);
 void beep_counter(counter_state_t *state);
+void beep_reset_counter(void);
 
 #define counter_face ((const watch_face_t){ \
     counter_face_setup, \

@@ -32,6 +32,7 @@ const watch_face_t watch_faces[] = {
     countdown_face,
     alarm_face,
     stopwatch_face,
+    counter_face,
     probability_face,
     day_one_face,
     thermistor_readout_face,
@@ -40,7 +41,7 @@ const watch_face_t watch_faces[] = {
     moon_phase_face,
     pulsometer_face,
     preferences_face,
-    set_time_face,
+    set_time_hackwatch_face,
     voltage_face,
 };
 
