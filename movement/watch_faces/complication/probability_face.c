@@ -33,9 +33,8 @@
 
 #define DEFAULT_DICE_SIDES 2
 #define PROBABILITY_ANIMATION_TICK_FREQUENCY 8
-const uint16_t NUM_DICE_TYPES = 8; // Keep this consistent with # of dice types below
-const uint16_t DICE_TYPES[] = {2, 4, 6, 8, 10, 12, 20, 100};
-
+const uint16_t NUM_DICE_TYPES = 12; // Keep this consistent with # of dice types below
+const uint16_t DICE_TYPES[] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 20, 100};
 
 // --------------
 // Custom methods
@@ -99,7 +98,6 @@ static void display_dice_roll_animation(probability_state_t *state) {
         }
     }
 }
-
 
 // ---------------------------
 // Standard watch face methods

@@ -72,6 +72,8 @@ bool simple_clock_face_loop(movement_event_t event, movement_settings_t *setting
 
     watch_date_time date_time;
     uint32_t previous_date_time;
+    uint32_t last_date_activate;
+
     switch (event.event_type) {
         case EVENT_ACTIVATE:
         case EVENT_TICK:
@@ -79,6 +81,35 @@ bool simple_clock_face_loop(movement_event_t event, movement_settings_t *setting
             date_time = watch_rtc_get_date_time();
             previous_date_time = state->previous_date_time;
             state->previous_date_time = date_time.reg;
+
+            last_date_activate = state->last_date_activate;
+
+            if (last_date_activate) {
+                // if date is visible for 3 seconds show time again and clear last_date_activate state
+                if ((date_time.reg - last_date_activate) >= 3 || (date_time.reg - last_date_activate) < 0) {
+                    if (!settings->bit.clock_mode_24h) {
+                        // if we are in 12 hour mode, set indicator if PM.
+                        if (date_time.unit.hour >= 12) {
+                            watch_set_indicator(WATCH_INDICATOR_PM);
+                        }
+                        date_time.unit.hour %= 12;
+                        if (date_time.unit.hour == 0) date_time.unit.hour = 12;
+                    }
+                    pos = 0;
+                    if (event.event_type == EVENT_LOW_ENERGY_UPDATE) {
+                        if (!watch_tick_animation_is_running()) watch_start_tick_animation(500);
+                        sprintf(buf, "%s%2d%2d%02d  ", watch_utility_get_weekday(date_time), date_time.unit.day, date_time.unit.hour, date_time.unit.minute);
+                    } else {
+                        sprintf(buf, "%s%2d%2d%02d%02d", watch_utility_get_weekday(date_time), date_time.unit.day, date_time.unit.hour, date_time.unit.minute, date_time.unit.second);
+                    }
+                    watch_display_string(buf, pos);
+                    watch_set_colon();
+                    if (settings->bit.clock_mode_24h) watch_set_indicator(WATCH_INDICATOR_24H);
+                    state->last_date_activate = 0;
+                }
+
+                return false;
+            }
 
             // check the battery voltage once a day...
             if (date_time.unit.day != state->last_battery_check) {
@@ -136,6 +167,18 @@ bool simple_clock_face_loop(movement_event_t event, movement_settings_t *setting
             state->signal_enabled = !state->signal_enabled;
             if (state->signal_enabled) watch_set_indicator(WATCH_INDICATOR_BELL);
             else watch_clear_indicator(WATCH_INDICATOR_BELL);
+            break;
+        case EVENT_ALARM_BUTTON_DOWN:
+            state->last_date_activate = date_time.reg;
+            pos = 4;
+            sprintf(buf, "%02d%02d%02d", date_time.unit.year + 2020, date_time.unit.month);
+            watch_display_string(buf, pos);
+            watch_clear_colon();
+            if (settings->bit.clock_mode_24h) {
+                watch_clear_indicator(WATCH_INDICATOR_24H);
+            } else if (date_time.unit.hour >= 12) {
+                watch_clear_indicator(WATCH_INDICATOR_PM);
+            }
             break;
         case EVENT_BACKGROUND_TASK:
             // uncomment this line to snap back to the clock face when the hour signal sounds:
