@@ -50,21 +50,30 @@ bool counter_face_loop(movement_event_t event, movement_settings_t *settings, vo
         case EVENT_MODE_BUTTON_UP:
             movement_move_to_next_face();
             break;
-        case EVENT_LIGHT_BUTTON_DOWN:
-            movement_illuminate_led();
-            break;
         case EVENT_ALARM_BUTTON_UP:
             state->counter_idx++; // increment counter index
-            if (state->counter_idx>9999) { //0-99
+            if (state->counter_idx>9999) { //0-9999
                 state->counter_idx=0;//reset counter index
             }
             print_counter(state);
-            beep_counter(state);
+            watch_buzzer_play_note(BUZZER_NOTE_A5, 50);
+            break;
+        case EVENT_LIGHT_LONG_PRESS:
+            if (state->counter_idx>0) {
+                state->counter_idx--; // decrement counter index
+                print_counter(state);
+                watch_buzzer_play_note(BUZZER_NOTE_E6, 50);
+            } else {
+                movement_illuminate_led();
+            }
             break;
         case EVENT_ALARM_LONG_PRESS:
             state->counter_idx=0; // reset counter index
             print_counter(state);
             beep_reset_counter();
+            break;
+        case EVENT_LIGHT_BUTTON_UP:
+            movement_illuminate_led();
             break;
         case EVENT_ACTIVATE:
             print_counter(state);
@@ -79,10 +88,6 @@ bool counter_face_loop(movement_event_t event, movement_settings_t *settings, vo
     return true;
 }
 
-// beep counter index times
-void beep_counter(counter_state_t *state) {
-	watch_buzzer_play_note(BUZZER_NOTE_A6, 50);
-}
 
 void beep_reset_counter(void) {
     watch_buzzer_play_note(BUZZER_NOTE_E6, 50);
