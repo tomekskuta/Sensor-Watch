@@ -27,25 +27,21 @@
 #include "melodies_face.h"
 #include <melodies.c>
 
-const char *melodies_names[] = {
-    " fail ",
-    "succes",
-    " jones",
-    " xfile",
-    " hari ",
-    "geralt",
+struct Melody {
+    char name[6];
+    uint8_t *melody;
 };
 
-const int num_melodies_count = (sizeof(melodies_names) / sizeof(char*));
-
-void (*melodies[])(void) = {
-    play_fail,
-    play_success,
-    play_indiana_jones,
-    play_x_files,
-    play_harry_potter,
-    play_witcher,
+struct Melody melodies[] = {
+    { " fail ", fail_melody },
+    { "succes", success_melody },
+    { " jones", indiana_jones_melody },
+    { "xfiles", x_files_melody },
+    { " hari ", harry_potter_melody },
+    { "geralt", witcher_melody }
 };
+
+const int num_melodies_count = (sizeof(melodies) / sizeof(melodies[0]));
 
 void melodies_face_setup(movement_settings_t *settings, uint8_t watch_face_index, void ** context_ptr) {
     (void) settings;
@@ -79,10 +75,13 @@ bool melodies_face_loop(movement_event_t event, movement_settings_t *settings, v
             break;
         case EVENT_LIGHT_BUTTON_UP:
             state->melody_idx = (state->melody_idx + 1) % num_melodies_count;
+            if (is_melody_playing) {
+                stop_melody();
+            }
             display(state);
             break;
         case EVENT_ALARM_BUTTON_DOWN:
-            melodies[state->melody_idx]();
+            play_stop_melody(melodies[state->melody_idx].melody);
             break;
         default:
             break;
@@ -98,7 +97,7 @@ void melodies_face_resign(movement_settings_t *settings, void *context) {
 
 void display(melodies_state_t *state) {
     char buf[14];
-    sprintf(buf, "ME  %s%2d", melodies_names[state->melody_idx]);
+    sprintf(buf, "ME  %s%2d", melodies[state->melody_idx].name);
 
     watch_display_string(buf, 0);
 }

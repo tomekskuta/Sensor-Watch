@@ -1,8 +1,7 @@
 #include "movement.h"
 
-void play_fail(void);
-void play_success(void);
-void play_indiana_jones(void);
-void play_x_files(void);
-void play_harry_potter(void);
-void play_witcher(void);
+void set_is_playing_true(void);
+void set_is_playing_false(void);
+void play_stop_melody(uint8_t *melody);
+void play_melody(uint8_t *melody);
+void stop_melody(void);
