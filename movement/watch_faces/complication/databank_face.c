@@ -29,6 +29,7 @@
 #include "databank_face.h"
 #include "watch.h"
 #include "watch_private_display.h"
+#include "melodies.h"
 
 const char *pi_data[] = {
     "PI", "314159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535940812848111745028410270193852110555964462294895493038196442",
@@ -104,6 +105,7 @@ bool databank_face_loop(movement_event_t event, movement_settings_t *settings, v
             // but not illuminating the LED.
             databank_state.current_word = (databank_state.current_word + max_words - 1) % max_words;
             display();
+            stop_melody_if_playing();
             break;
         case EVENT_LIGHT_LONG_PRESS:
             databank_state.databank_page = (databank_state.databank_page + databank_num_pages - 1) % databank_num_pages;

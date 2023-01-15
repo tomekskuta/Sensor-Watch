@@ -26,6 +26,7 @@
 #include <string.h>
 #include "voltage_face.h"
 #include "watch.h"
+#include "melodies.h"
 
 static void _voltage_face_update_display(void) {
     char buf[14];
@@ -63,6 +64,7 @@ bool voltage_face_loop(movement_event_t event, movement_settings_t *settings, vo
             break;
         case EVENT_LIGHT_BUTTON_DOWN:
             movement_illuminate_led();
+            stop_melody_if_playing();
             break;
         case EVENT_ACTIVATE:
             _voltage_face_update_display();

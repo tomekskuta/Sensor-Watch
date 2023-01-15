@@ -27,6 +27,7 @@
 #include "watch.h"
 #include "watch_utility.h"
 #include "watch_private_display.h"
+#include "melodies.h"
 
 static void _update_alarm_indicator(bool settings_alarm_enabled, simple_clock_state_t *state) {
     state->alarm_enabled = settings_alarm_enabled;
@@ -164,6 +165,7 @@ bool simple_clock_face_loop(movement_event_t event, movement_settings_t *setting
             return false;
         case EVENT_LIGHT_BUTTON_DOWN:
             movement_illuminate_led();
+            stop_melody_if_playing();
             break;
         case EVENT_ALARM_LONG_PRESS:
             state->signal_enabled = !state->signal_enabled;

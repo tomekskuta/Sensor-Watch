@@ -25,11 +25,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include "melodies_face.h"
-#include <melodies.c>
+#include "melodies.h"
 
 struct Melody {
     char name[6];
-    uint8_t *melody;
+    const uint8_t *melody;
 };
 
 struct Melody melodies[] = {

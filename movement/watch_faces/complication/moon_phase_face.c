@@ -33,6 +33,7 @@
 #include <math.h>
 #include "moon_phase_face.h"
 #include "watch_utility.h"
+#include "melodies.h"
 
 #define LUNAR_DAYS 29.53058770576
 #define LUNAR_SECONDS (LUNAR_DAYS * (24 * 60 * 60))
@@ -163,6 +164,7 @@ bool moon_phase_face_loop(movement_event_t event, movement_settings_t *settings,
             break;
         case EVENT_LIGHT_BUTTON_DOWN:
             movement_illuminate_led();
+            stop_melody_if_playing();
             break;
         case EVENT_ALARM_BUTTON_UP:
             // Pressing the alarm adds an offset of one day to the displayed value,

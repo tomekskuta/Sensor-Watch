@@ -26,6 +26,7 @@
 #include <string.h>
 #include "pulsometer_face.h"
 #include "watch.h"
+#include "melodies.h"
 
 #define PULSOMETER_FACE_FREQUENCY_FACTOR (4ul) // refresh rate will be 2 to this power Hz (0 for 1 Hz, 2 for 4 Hz, etc.)
 #define PULSOMETER_FACE_FREQUENCY (1 << PULSOMETER_FACE_FREQUENCY_FACTOR)
@@ -54,6 +55,7 @@ bool pulsometer_face_loop(movement_event_t event, movement_settings_t *settings,
             break;
         case EVENT_LIGHT_BUTTON_DOWN:
             movement_illuminate_led();
+            stop_melody_if_playing();
             break;
         case EVENT_ALARM_BUTTON_DOWN:
             pulsometer_state->measuring = true;

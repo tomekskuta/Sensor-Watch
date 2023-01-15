@@ -26,6 +26,7 @@
 #include <string.h>
 #include "day_one_face.h"
 #include "watch.h"
+#include "melodies.h"
 
 static uint32_t _day_one_face_juliandaynum(uint16_t year, uint16_t month, uint16_t day) {
     // from here: https://en.wikipedia.org/wiki/Julian_day#Julian_day_number_calculation
@@ -132,6 +133,7 @@ bool day_one_face_loop(movement_event_t event, movement_settings_t *settings, vo
         case EVENT_LIGHT_BUTTON_DOWN:
             // only illuminate if we're in display mode
             if (state->current_page == 0) movement_illuminate_led();
+            stop_melody_if_playing();
             break;
         case EVENT_LIGHT_BUTTON_UP:
             // otherwise use the light button to advance settings pages.

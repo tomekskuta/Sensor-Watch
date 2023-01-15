@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include "preferences_face.h"
 #include "watch.h"
+#include "melodies.h"
 
 #define PREFERENCES_FACE_NUM_PREFEFENCES (7)
 const char preferences_face_titles[PREFERENCES_FACE_NUM_PREFEFENCES][11] = {
@@ -64,6 +65,7 @@ bool preferences_face_loop(movement_event_t event, movement_settings_t *settings
             movement_move_to_face(0);
             break;
         case EVENT_LIGHT_BUTTON_UP:
+            stop_melody_if_playing();
             current_page = (current_page + 1) % PREFERENCES_FACE_NUM_PREFEFENCES;
             *((uint8_t *)context) = current_page;
             break;

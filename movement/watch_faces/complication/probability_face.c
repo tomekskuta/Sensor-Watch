@@ -30,17 +30,18 @@
 #include <stdlib.h>
 #include <string.h>
 #include "probability_face.h"
+#include "melodies.h"
 
 #define DEFAULT_DICE_SIDES 2
 #define PROBABILITY_ANIMATION_TICK_FREQUENCY 8
-const uint16_t NUM_DICE_TYPES = 12; // Keep this consistent with # of dice types below
-const uint16_t DICE_TYPES[] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 20, 100};
+const uint16_t NUM_DICE_TYPES = 13; // Keep this consistent with # of dice types below
+const uint16_t DICE_TYPES[] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20, 100};
 
 // --------------
 // Custom methods
 // --------------
 
-static void display_dice_roll(probability_state_t *state) {
+static void display_dice_roll(probability_state_t *state, movement_settings_t *settings) {
     char buf[8];
     if (state->rolled_value == 0) {
         if (state->dice_sides == 100) {
@@ -51,8 +52,14 @@ static void display_dice_roll(probability_state_t *state) {
     } else if (state->dice_sides == 2) {
         if (state->rolled_value == 1) {
             sprintf(buf, "%2d   H", state->dice_sides);
+            if (settings->bit.button_should_sound) {
+                play_melody(fail_melody);
+            }
         } else {
             sprintf(buf, "%2d   T", state->dice_sides);
+            if (settings->bit.button_should_sound) {
+                play_melody(success_melody);
+            }
         }
     } else if (state->dice_sides == 100) {
         sprintf(buf, " C %3d", state->rolled_value);
@@ -71,7 +78,7 @@ static void generate_random_number(probability_state_t *state) {
     #endif
 }
 
-static void display_dice_roll_animation(probability_state_t *state) {
+static void display_dice_roll_animation(probability_state_t *state, movement_settings_t *settings) {
     if (state->is_rolling) {
         if (state->animation_frame == 0) {
             watch_display_string("   ", 7);
@@ -94,7 +101,7 @@ static void display_dice_roll_animation(probability_state_t *state) {
             state->animation_frame = 0;
             state->is_rolling = false;
             movement_request_tick_frequency(1);
-            display_dice_roll(state);
+            display_dice_roll(state, settings);
         }
     }
 }
@@ -134,10 +141,10 @@ bool probability_face_loop(movement_event_t event, movement_settings_t *settings
 
     switch (event.event_type) {
         case EVENT_ACTIVATE:
-            display_dice_roll(state);
+            display_dice_roll(state, settings);
             break;
         case EVENT_TICK:
-            display_dice_roll_animation(state);
+            display_dice_roll_animation(state, settings);
             break;
         case EVENT_MODE_BUTTON_UP:
             movement_move_to_next_face();
@@ -146,6 +153,7 @@ bool probability_face_loop(movement_event_t event, movement_settings_t *settings
             movement_move_to_face(0);
             break;
         case EVENT_LIGHT_BUTTON_UP:
+            stop_melody_if_playing();
             // Change how many sides the die has
             for (int i = 0; i < NUM_DICE_TYPES; i++) {
                 if (DICE_TYPES[i] == state->dice_sides) {
@@ -158,7 +166,7 @@ bool probability_face_loop(movement_event_t event, movement_settings_t *settings
                 }
             }
             state->rolled_value = 0;
-            display_dice_roll(state);
+            display_dice_roll(state, settings);
             break;
         case EVENT_ALARM_BUTTON_UP:
             // Roll the die

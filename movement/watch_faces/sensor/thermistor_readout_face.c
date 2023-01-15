@@ -27,6 +27,7 @@
 #include "thermistor_readout_face.h"
 #include "thermistor_driver.h"
 #include "watch.h"
+#include "melodies.h"
 
 static void _thermistor_readout_face_update_display(bool in_fahrenheit) {
     thermistor_driver_enable();
@@ -65,6 +66,7 @@ bool thermistor_readout_face_loop(movement_event_t event, movement_settings_t *s
             break;
         case EVENT_LIGHT_BUTTON_DOWN:
             movement_illuminate_led();
+            stop_melody_if_playing();
             break;
         case EVENT_ALARM_BUTTON_DOWN:
             settings->bit.use_imperial_units = !settings->bit.use_imperial_units;

@@ -1,8 +1,6 @@
 #include <stdlib.h>
 #include "melodies.h"
 
-const int time_fixer = 100 / 6;
-
 bool is_melody_playing = false;
 
 void set_is_playing_true(void) {
@@ -13,7 +11,7 @@ void set_is_playing_false(void) {
     is_melody_playing = false;
 }
 
-void play_melody(uint8_t* melody) {
+void play_melody(const uint8_t* melody) {
     set_is_playing_true();
     watch_buzzer_play_sequence((int8_t *)melody, set_is_playing_false);
 }
@@ -23,7 +21,13 @@ void stop_melody(void) {
     watch_buzzer_abort_sequence();
 }
 
-void play_stop_melody(uint8_t* melody) {
+void stop_melody_if_playing(void) {
+    if (is_melody_playing) {
+        stop_melody();
+    }
+};
+
+void play_stop_melody(const uint8_t* melody) {
     if (is_melody_playing) {
         stop_melody();
     } else {
@@ -31,7 +35,7 @@ void play_stop_melody(uint8_t* melody) {
     }
 }
 
-uint8_t fail_melody[] = {
+const uint8_t fail_melody[11] = {
     BUZZER_NOTE_C5, 7, // 100
     BUZZER_NOTE_B4, 7, // 100
     BUZZER_NOTE_A4SHARP_B4FLAT, 7, // 100
@@ -40,7 +44,7 @@ uint8_t fail_melody[] = {
     0
 };
 
-uint8_t success_melody[] = {
+const uint8_t success_melody[13] = {
     BUZZER_NOTE_C5, 19, // 290
     BUZZER_NOTE_REST, 1, // 10
     BUZZER_NOTE_C5, 10, // 150
@@ -50,7 +54,7 @@ uint8_t success_melody[] = {
     0
 };
 
-uint8_t indiana_jones_melody[] = {
+const uint8_t indiana_jones_melody[69] = {
     BUZZER_NOTE_E4, 22, // 345
     BUZZER_NOTE_F4, 7, // 115
 
@@ -96,7 +100,7 @@ uint8_t indiana_jones_melody[] = {
     0
 };
 
-uint8_t x_files_melody[] = {
+const uint8_t x_files_melody[41] = {
     BUZZER_NOTE_A4, 32, // 500
     BUZZER_NOTE_E5, 32, // 500
     BUZZER_NOTE_D5, 32, // 500
@@ -124,7 +128,7 @@ uint8_t x_files_melody[] = {
     0
 };
 
-uint8_t harry_potter_melody[] = {
+const uint8_t harry_potter_melody[63] = {
     BUZZER_NOTE_C5, 19, // 300
 
     BUZZER_NOTE_F5, 29, // 450
@@ -172,9 +176,10 @@ uint8_t harry_potter_melody[] = {
     BUZZER_NOTE_G5SHARP_A5FLAT, 19, // 300
 
     BUZZER_NOTE_F5, 77, // 1200
+    0
 };
 
-uint8_t witcher_melody[] = {
+const uint8_t witcher_melody[47] = {
     BUZZER_NOTE_A4SHARP_B4FLAT, 16, // 250
     BUZZER_NOTE_C5SHARP_D5FLAT, 16, // 250
     BUZZER_NOTE_F5, 32, // 500
@@ -201,4 +206,5 @@ uint8_t witcher_melody[] = {
     BUZZER_NOTE_G4SHARP_A4FLAT, 16, // 250
     BUZZER_NOTE_A4SHARP_B4FLAT, 16, // 250
     BUZZER_NOTE_C5SHARP_D5FLAT, 48, // 750
+    0
 };

@@ -29,6 +29,7 @@
 #include "countdown_face.h"
 #include "watch.h"
 #include "watch_utility.h"
+#include "melodies.h"
 
 
 #define CD_SELECTIONS 3
@@ -100,7 +101,7 @@ static void reset(countdown_state_t *state) {
 }
 
 static void ring(countdown_state_t *state) {
-    movement_play_alarm();
+    play_melody(indiana_jones_melody);
     reset(state);
 }
 
@@ -185,6 +186,7 @@ bool countdown_face_loop(movement_event_t event, movement_settings_t *settings, 
                     break;
             }
             draw(state, event.subsecond);
+            stop_melody_if_playing();
             break;
         case EVENT_ALARM_BUTTON_UP:
             switch(state->mode) {

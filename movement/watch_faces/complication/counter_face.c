@@ -26,6 +26,7 @@
 #include <string.h>
 #include "counter_face.h"
 #include "watch.h"
+#include "melodies.h"
 
 void counter_face_setup(movement_settings_t *settings, uint8_t watch_face_index, void ** context_ptr) {
     (void) settings;
@@ -77,6 +78,7 @@ bool counter_face_loop(movement_event_t event, movement_settings_t *settings, vo
             break;
         case EVENT_LIGHT_BUTTON_UP:
             movement_illuminate_led();
+            stop_melody_if_playing();
             break;
         case EVENT_ACTIVATE:
             print_counter(state);

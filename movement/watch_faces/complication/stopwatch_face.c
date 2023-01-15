@@ -28,6 +28,7 @@
 #include "stopwatch_face.h"
 #include "watch.h"
 #include "watch_utility.h"
+#include "melodies.h"
 
 // distant future for background task: January 1, 2083
 // see stopwatch_face_activate for details
@@ -115,6 +116,7 @@ bool stopwatch_face_loop(movement_event_t event, movement_settings_t *settings, 
             break;
         case EVENT_LIGHT_BUTTON_DOWN:
             movement_illuminate_led();
+            stop_melody_if_playing();
             if (!stopwatch_state->running) {
                 stopwatch_state->start_time.reg = 0;
                 stopwatch_state->seconds_counted = 0;

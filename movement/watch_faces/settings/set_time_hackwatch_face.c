@@ -41,6 +41,7 @@
 #include <stdlib.h>
 #include "set_time_hackwatch_face.h"
 #include "watch.h"
+#include "melodies.h"
 
 char set_time_hackwatch_face_titles[][3] = {"HR", "M1", "SE", "YR", "MO", "DA", "ZO"};
 #define set_time_hackwatch_face_NUM_SETTINGS (sizeof(set_time_hackwatch_face_titles) / sizeof(*set_time_hackwatch_face_titles))
@@ -86,6 +87,8 @@ bool set_time_hackwatch_face_loop(movement_event_t event, movement_settings_t *s
             *((uint8_t *)context) = current_page;
             break;
         case EVENT_LIGHT_BUTTON_UP:
+            stop_melody_if_playing();
+
             if (current_page == 2)
                 watch_rtc_enable(true);
 

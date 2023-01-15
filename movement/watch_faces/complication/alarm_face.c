@@ -31,6 +31,7 @@
 #include "watch.h"
 #include "watch_utility.h"
 #include "watch_private_display.h"
+#include "melodies.h"
 
 /*
     Implements 16 alarm slots on the sensor watch
@@ -318,6 +319,7 @@ bool alarm_face_loop(movement_event_t event, movement_settings_t *settings, void
         _alarm_face_draw(settings, state, event.subsecond);
         break;
     case EVENT_LIGHT_BUTTON_UP:
+        stop_melody_if_playing();
         if (!state->is_setting) {
             movement_illuminate_led();
             _alarm_initiate_setting(settings, state, event.subsecond);

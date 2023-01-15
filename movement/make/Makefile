@@ -42,6 +42,7 @@ SRCS += \
   ../../littlefs/lfs_util.c \
   ../movement.c \
   ../filesystem.c \
+  ../melodies.c \
   ../watch_faces/clock/simple_clock_face.c \
   ../watch_faces/clock/world_clock_face.c \
   ../watch_faces/clock/beats_face.c \
