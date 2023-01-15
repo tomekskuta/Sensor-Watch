@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Joey Castillo
+ * Copyright (c) 2022 Shogo Okamoto
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,38 +22,30 @@
  * SOFTWARE.
  */
 
-#ifndef MOVEMENT_CONFIG_H_
-#define MOVEMENT_CONFIG_H_
+// Just play chosen melody
 
-#include "movement_faces.h"
+#ifndef MELODIES_FACE_H_
+#define MELODIES_FACE_H_
 
-const watch_face_t watch_faces[] = {
-    simple_clock_face,
-    melodies_face,
-    databank_face,
-    countdown_face,
-    alarm_face,
-    stopwatch_face,
-    counter_face,
-    probability_face,
-    day_one_face,
-    thermistor_readout_face,
-    thermistor_logging_face,
-    sunrise_sunset_face,
-    moon_phase_face,
-    pulsometer_face,
-    preferences_face,
-    set_time_hackwatch_face,
-    voltage_face,
-};
+#include "movement.h"
 
-#define MOVEMENT_NUM_FACES (sizeof(watch_faces) / sizeof(watch_face_t))
+typedef struct {
+    uint8_t melody_idx;
+} melodies_state_t;
 
-/* Determines what face to go to from the first face if you've already set
- * a mode long press to go to the first face in preferences, and
- * excludes these faces from the normal rotation.
- * Usually it makes sense to set this to the preferences face.
- */
-#define MOVEMENT_SECONDARY_FACE_INDEX 0 // or (MOVEMENT_NUM_FACES - 2)
+void melodies_face_setup(movement_settings_t *settings, uint8_t watch_face_index, void ** context_ptr);
+void melodies_face_activate(movement_settings_t *settings, void *context);
+bool melodies_face_loop(movement_event_t event, movement_settings_t *settings, void *context);
+void melodies_face_resign(movement_settings_t *settings, void *context);
 
-#endif // MOVEMENT_CONFIG_H_
+void display(melodies_state_t *state);
+
+#define melodies_face ((const watch_face_t){ \
+    melodies_face_setup, \
+    melodies_face_activate, \
+    melodies_face_loop, \
+    melodies_face_resign, \
+    NULL, \
+})
+
+#endif // MELODIES_FACE_H_
