@@ -97,6 +97,9 @@ bool thermistor_logging_face_loop(movement_event_t event, movement_settings_t *s
         case EVENT_MODE_BUTTON_UP:
             movement_move_to_next_face();
             break;
+        case EVENT_MODE_LONG_PRESS:
+            movement_move_to_face(0);
+            break;
         case EVENT_LIGHT_LONG_PRESS:
             // light button shows the timestamp, but if you need the light, long press it.
             movement_illuminate_led();

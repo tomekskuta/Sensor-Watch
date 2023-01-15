@@ -141,6 +141,9 @@ bool databank_face_loop(movement_event_t event, movement_settings_t *settings, v
             // and it will do it long before the watch enters low energy mode. This ensures we
             // won't be on screen, and thus opts us out of getting the EVENT_LOW_ENERGY_UPDATE above.
             movement_move_to_face(0);
+        case EVENT_MODE_LONG_PRESS:
+            movement_move_to_face(0);
+            break;
         default:
             break;
     }
