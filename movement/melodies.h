@@ -15,3 +15,6 @@ extern const uint8_t indiana_jones_melody[69];
 extern const uint8_t x_files_melody[41];
 extern const uint8_t harry_potter_melody[63];
 extern const uint8_t witcher_melody[47];
+// extern const uint8_t star_wars_melody[47];
+// extern const uint8_t mario_melody[47];
+extern const uint8_t papa_melody[];

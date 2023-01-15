@@ -38,7 +38,8 @@ struct Melody melodies[] = {
     { " jones", indiana_jones_melody },
     { "xfiles", x_files_melody },
     { " hari ", harry_potter_melody },
-    { "geralt", witcher_melody }
+    { "geralt", witcher_melody },
+    { " papa ", papa_melody },
 };
 
 const int num_melodies_count = (sizeof(melodies) / sizeof(melodies[0]));
