@@ -21,12 +21,6 @@ void stop_melody(void) {
     watch_buzzer_abort_sequence();
 }
 
-void stop_melody_if_playing(void) {
-    if (is_melody_playing) {
-        stop_melody();
-    }
-};
-
 void play_stop_melody(const uint8_t* melody) {
     if (is_melody_playing) {
         stop_melody();

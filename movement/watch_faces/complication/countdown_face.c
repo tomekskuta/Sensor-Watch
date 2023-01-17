@@ -168,6 +168,10 @@ bool countdown_face_loop(movement_event_t event, movement_settings_t *settings, 
             movement_move_to_face(0);
             break;
         case EVENT_LIGHT_BUTTON_UP:
+            if (is_melody_playing) {
+                stop_melody();
+                break;
+            }
             switch(state->mode) {
                 case cd_running:
                     movement_illuminate_led();
@@ -186,7 +190,6 @@ bool countdown_face_loop(movement_event_t event, movement_settings_t *settings, 
                     break;
             }
             draw(state, event.subsecond);
-            stop_melody_if_playing();
             break;
         case EVENT_ALARM_BUTTON_UP:
             switch(state->mode) {

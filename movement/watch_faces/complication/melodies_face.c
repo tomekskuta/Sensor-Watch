@@ -77,10 +77,11 @@ bool melodies_face_loop(movement_event_t event, movement_settings_t *settings, v
             movement_illuminate_led();
             break;
         case EVENT_LIGHT_BUTTON_UP:
-            state->melody_idx = (state->melody_idx + 1) % num_melodies_count;
             if (is_melody_playing) {
                 stop_melody();
+                break;
             }
+            state->melody_idx = (state->melody_idx + 1) % num_melodies_count;
             display(state);
             break;
         case EVENT_ALARM_BUTTON_DOWN:

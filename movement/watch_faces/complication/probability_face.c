@@ -153,7 +153,10 @@ bool probability_face_loop(movement_event_t event, movement_settings_t *settings
             movement_move_to_face(0);
             break;
         case EVENT_LIGHT_BUTTON_UP:
-            stop_melody_if_playing();
+            if (is_melody_playing) {
+                stop_melody();
+                break;
+            }
             // Change how many sides the die has
             for (int i = 0; i < NUM_DICE_TYPES; i++) {
                 if (DICE_TYPES[i] == state->dice_sides) {

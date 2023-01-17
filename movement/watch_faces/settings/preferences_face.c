@@ -65,7 +65,10 @@ bool preferences_face_loop(movement_event_t event, movement_settings_t *settings
             movement_move_to_face(0);
             break;
         case EVENT_LIGHT_BUTTON_UP:
-            stop_melody_if_playing();
+            if (is_melody_playing) {
+                stop_melody();
+                break;
+            }
             current_page = (current_page + 1) % PREFERENCES_FACE_NUM_PREFEFENCES;
             *((uint8_t *)context) = current_page;
             break;

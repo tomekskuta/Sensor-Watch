@@ -5,7 +5,6 @@ extern void set_is_playing_false(void);
 extern void play_stop_melody(const uint8_t *melody);
 extern void play_melody(const uint8_t *melody);
 extern void stop_melody(void);
-extern void stop_melody_if_playing(void);
 
 extern bool is_melody_playing;
 

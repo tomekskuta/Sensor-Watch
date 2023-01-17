@@ -115,8 +115,11 @@ bool stopwatch_face_loop(movement_event_t event, movement_settings_t *settings, 
             movement_move_to_face(0);
             break;
         case EVENT_LIGHT_BUTTON_DOWN:
+            if (is_melody_playing) {
+                stop_melody();
+                break;
+            }
             movement_illuminate_led();
-            stop_melody_if_playing();
             if (!stopwatch_state->running) {
                 stopwatch_state->start_time.reg = 0;
                 stopwatch_state->seconds_counted = 0;

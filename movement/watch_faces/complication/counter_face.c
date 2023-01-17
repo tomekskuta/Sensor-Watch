@@ -77,8 +77,11 @@ bool counter_face_loop(movement_event_t event, movement_settings_t *settings, vo
             beep_reset_counter();
             break;
         case EVENT_LIGHT_BUTTON_UP:
+            if (is_melody_playing) {
+                stop_melody();
+                break;
+            }
             movement_illuminate_led();
-            stop_melody_if_playing();
             break;
         case EVENT_ACTIVATE:
             print_counter(state);

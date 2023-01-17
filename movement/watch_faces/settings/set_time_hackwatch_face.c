@@ -87,7 +87,10 @@ bool set_time_hackwatch_face_loop(movement_event_t event, movement_settings_t *s
             *((uint8_t *)context) = current_page;
             break;
         case EVENT_LIGHT_BUTTON_UP:
-            stop_melody_if_playing();
+            if (is_melody_playing) {
+                stop_melody();
+                break;
+            }
 
             if (current_page == 2)
                 watch_rtc_enable(true);

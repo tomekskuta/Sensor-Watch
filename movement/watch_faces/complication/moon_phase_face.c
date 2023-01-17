@@ -163,8 +163,11 @@ bool moon_phase_face_loop(movement_event_t event, movement_settings_t *settings,
             movement_move_to_face(0);
             break;
         case EVENT_LIGHT_BUTTON_DOWN:
+            if (is_melody_playing) {
+                stop_melody();
+                break;
+            }
             movement_illuminate_led();
-            stop_melody_if_playing();
             break;
         case EVENT_ALARM_BUTTON_UP:
             // Pressing the alarm adds an offset of one day to the displayed value,

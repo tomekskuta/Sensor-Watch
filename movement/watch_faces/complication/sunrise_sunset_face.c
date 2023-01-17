@@ -347,7 +347,10 @@ bool sunrise_sunset_face_loop(movement_event_t event, movement_settings_t *setti
             movement_move_to_face(0);
             break;
         case EVENT_LIGHT_BUTTON_DOWN:
-            stop_melody_if_playing();
+            if (is_melody_playing) {
+                stop_melody();
+                break;
+            }
             if (state->page) {
                 state->active_digit++;
                 if (state->page == 1 && state->active_digit == 1) state->active_digit++; // max latitude is +- 90, no hundreds place

@@ -164,8 +164,11 @@ bool simple_clock_face_loop(movement_event_t event, movement_settings_t *setting
             movement_move_to_next_face();
             return false;
         case EVENT_LIGHT_BUTTON_DOWN:
+            if (is_melody_playing) {
+                stop_melody();
+                break;
+            }
             movement_illuminate_led();
-            stop_melody_if_playing();
             break;
         case EVENT_ALARM_LONG_PRESS:
             state->signal_enabled = !state->signal_enabled;

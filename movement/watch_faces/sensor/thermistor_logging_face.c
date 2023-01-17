@@ -106,9 +106,12 @@ bool thermistor_logging_face_loop(movement_event_t event, movement_settings_t *s
             movement_illuminate_led();
             break;
         case EVENT_LIGHT_BUTTON_DOWN:
+            if (is_melody_playing) {
+                stop_melody();
+                break;
+            }
             logger_state->ts_ticks = 2;
             _thermistor_logging_face_update_display(logger_state, settings->bit.use_imperial_units, settings->bit.clock_mode_24h);
-            stop_melody_if_playing();
             break;
         case EVENT_ALARM_BUTTON_DOWN:
             logger_state->display_index = (logger_state->display_index + 1) % THERMISTOR_LOGGING_NUM_DATA_POINTS;

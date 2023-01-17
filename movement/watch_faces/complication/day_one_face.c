@@ -131,9 +131,12 @@ bool day_one_face_loop(movement_event_t event, movement_settings_t *settings, vo
             movement_move_to_face(0);
             break;
         case EVENT_LIGHT_BUTTON_DOWN:
+            if (is_melody_playing) {
+                stop_melody();
+                break;
+            }
             // only illuminate if we're in display mode
             if (state->current_page == 0) movement_illuminate_led();
-            stop_melody_if_playing();
             break;
         case EVENT_LIGHT_BUTTON_UP:
             // otherwise use the light button to advance settings pages.

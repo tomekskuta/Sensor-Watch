@@ -100,12 +100,15 @@ bool databank_face_loop(movement_event_t event, movement_settings_t *settings, v
             // on activate and tick, if we are animating,
             break;
         case EVENT_LIGHT_BUTTON_UP:
+            if (is_melody_playing) {
+                stop_melody();
+                break;
+            }
             // when the user presses 'light', we illuminate the LED. We could override this if
             // our UI needed an additional button for input, consuming the light button press
             // but not illuminating the LED.
             databank_state.current_word = (databank_state.current_word + max_words - 1) % max_words;
             display();
-            stop_melody_if_playing();
             break;
         case EVENT_LIGHT_LONG_PRESS:
             databank_state.databank_page = (databank_state.databank_page + databank_num_pages - 1) % databank_num_pages;
