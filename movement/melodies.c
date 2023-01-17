@@ -35,6 +35,15 @@ void play_stop_melody(const uint8_t* melody) {
     }
 }
 
+const uint8_t alarm_melody[11] = {
+    BUZZER_NOTE_B6, 8,
+    BUZZER_NOTE_REST, 8,
+    BUZZER_NOTE_B6, 16,
+    BUZZER_NOTE_REST, 32,
+    -4, 7,
+    0
+};
+
 const uint8_t fail_melody[11] = {
     BUZZER_NOTE_C5, 7, // 100
     BUZZER_NOTE_B4, 7, // 100

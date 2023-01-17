@@ -9,6 +9,7 @@ extern void stop_melody_if_playing(void);
 
 extern bool is_melody_playing;
 
+extern const uint8_t alarm_melody[11];
 extern const uint8_t fail_melody[11];
 extern const uint8_t success_melody[13];
 extern const uint8_t indiana_jones_melody[69];
