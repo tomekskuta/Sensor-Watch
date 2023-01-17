@@ -40,7 +40,7 @@ A face for setting various alarms
 #define ALARM_DAY_WORKDAY 9
 #define ALARM_DAY_WEEKEND 10
 #define ALARM_SETTING_STATES 5
-#define ALARM_MELODY_STATES 8
+#define ALARM_MELODY_STATES 9
 
 typedef struct {
     uint8_t day : 4;    // day of week: 0=MO, 1=TU, 2=WE, 3=TH, 4=FR, 5=SA, 6=SU, 7=each day, 8=one time alarm, 9=Weekdays, 10=Weekend

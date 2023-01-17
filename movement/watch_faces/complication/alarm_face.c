@@ -80,6 +80,7 @@ static struct Melody melodies[] = {
     { "ij", indiana_jones_melody },
     { "hp", harry_potter_melody },
     { "xf", x_files_melody },
+    { "sw", star_wars_melody },
     { "ge", witcher_melody },
     { "fa", fail_melody },
     { "su", success_melody },

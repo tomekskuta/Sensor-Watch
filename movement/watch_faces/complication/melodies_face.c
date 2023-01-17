@@ -38,6 +38,7 @@ struct Melody melodies[] = {
     { " jones", indiana_jones_melody },
     { "xfiles", x_files_melody },
     { " hari ", harry_potter_melody },
+    { "star w", star_wars_melody },
     { "geralt", witcher_melody },
     { "alarm ", alarm_melody },
     { " papa ", papa_melody },
