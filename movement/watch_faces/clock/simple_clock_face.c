@@ -178,7 +178,7 @@ bool simple_clock_face_loop(movement_event_t event, movement_settings_t *setting
         case EVENT_ALARM_BUTTON_DOWN:
             state->last_date_activate = date_time.reg;
             pos = 4;
-            sprintf(buf, "%02d%02d%02d", date_time.unit.year + 2020, date_time.unit.month);
+            sprintf(buf, "%4d%02d", date_time.unit.year + 2020, date_time.unit.month);
             watch_display_string(buf, pos);
             watch_clear_colon();
             if (settings->bit.clock_mode_24h) {

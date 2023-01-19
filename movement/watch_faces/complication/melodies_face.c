@@ -39,6 +39,8 @@ struct Melody melodies[] = {
     { "xfiles", x_files_melody },
     { " hari ", harry_potter_melody },
     { "star w", star_wars_melody },
+    { "champ ", champions_league_melody },
+    { "divini", divinity_melody },
     { "geralt", witcher_melody },
     { "alarm ", alarm_melody },
     { " papa ", papa_melody },
@@ -97,6 +99,9 @@ bool melodies_face_loop(movement_event_t event, movement_settings_t *settings, v
 void melodies_face_resign(movement_settings_t *settings, void *context) {
     (void) settings;
     (void) context;
+
+    melodies_state_t *state = (melodies_state_t *)context;
+    state->melody_idx = 0;
 }
 
 void display(melodies_state_t *state) {

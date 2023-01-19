@@ -30,12 +30,12 @@
 const watch_face_t watch_faces[] = {
     simple_clock_face,
     melodies_face,
+    counter_face,
     probability_face,
     databank_face,
     countdown_face,
     stopwatch_face,
     alarm_face,
-    counter_face,
     day_one_face,
     thermistor_readout_face,
     thermistor_logging_face,

@@ -81,6 +81,8 @@ static struct Melody melodies[] = {
     { "hp", harry_potter_melody },
     { "xf", x_files_melody },
     { "sw", star_wars_melody },
+    { "cl", champions_league_melody },
+    { "di", divinity_melody },
     { "ge", witcher_melody },
     { "fa", fail_melody },
     { "su", success_melody },
@@ -391,6 +393,7 @@ bool alarm_face_loop(movement_event_t event, movement_settings_t *settings, void
         } else _wait_ticks = -1;
         break;
     case EVENT_BACKGROUND_TASK:
+        movement_request_wake();
         play_melody(melodies[state->alarm[state->alarm_playing_idx].melody].melody);
 
         // one time alarm? -> erase it
