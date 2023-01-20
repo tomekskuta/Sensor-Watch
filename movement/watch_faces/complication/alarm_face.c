@@ -183,7 +183,7 @@ static void _alarm_update_alarm_enabled(movement_settings_t *settings, alarm_sta
                 if ((state->alarm[i].day == weekday_idx && alarm_minutes_of_day >= now_minutes_of_day)
                     || ((weekday_idx + 1) % 7 == state->alarm[i].day && alarm_minutes_of_day <= now_minutes_of_day) 
                     || (state->alarm[i].day == ALARM_DAY_WORKDAY && (weekday_idx < 4
-                        || (weekday_idx == 5 && alarm_minutes_of_day >= now_minutes_of_day)
+                        || (weekday_idx == 4 && alarm_minutes_of_day >= now_minutes_of_day)
                         || (weekday_idx == 6 && alarm_minutes_of_day <= now_minutes_of_day)))
                     || (state->alarm[i].day == ALARM_DAY_WEEKEND && (weekday_idx == 5
                         || (weekday_idx == 6 && alarm_minutes_of_day >= now_minutes_of_day)
@@ -393,7 +393,6 @@ bool alarm_face_loop(movement_event_t event, movement_settings_t *settings, void
         } else _wait_ticks = -1;
         break;
     case EVENT_BACKGROUND_TASK:
-        movement_request_wake();
         play_melody(melodies[state->alarm[state->alarm_playing_idx].melody].melody);
 
         // one time alarm? -> erase it
@@ -415,7 +414,7 @@ bool alarm_face_loop(movement_event_t event, movement_settings_t *settings, void
         movement_move_to_face(0);
         break;
     default:
-      break;
+        break;
     }
 
     return true;
